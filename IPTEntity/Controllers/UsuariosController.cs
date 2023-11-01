@@ -1,9 +1,11 @@
 ﻿using IPTEntity.Models;
+using IPTEntity.Servicios;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Abstractions;
 using System.Runtime.InteropServices;
 
@@ -14,12 +16,13 @@ namespace IPTEntity.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
-
+        private readonly ApplicationDbContext context;
         public UsuariosController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager, ApplicationDbContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.context = context;
         }
         [AllowAnonymous]
         public IActionResult Registro()
@@ -64,19 +67,19 @@ namespace IPTEntity.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel modelo)
         {
-        if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(modelo);
             }
 
-        var resultado = await signInManager.PasswordSignInAsync(modelo.Email,
-            modelo.Password, modelo.Recuerdame, lockoutOnFailure: false);
+            var resultado = await signInManager.PasswordSignInAsync(modelo.Email,
+                modelo.Password, modelo.Recuerdame, lockoutOnFailure: false);
 
-        if (resultado.Succeeded)
+            if (resultado.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
-        else
+            else
             {
                 ModelState.AddModelError(string.Empty, "Nombre de usuario o password incorrecto.");
                 return View(modelo);
@@ -88,6 +91,43 @@ namespace IPTEntity.Controllers
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        [Authorize(Roles= Constantes.RolAdmin)]
+        public async Task<IActionResult> Listado(string mensaje = null)
+        {
+            var usuarios = await context.Users.Select(u => new UsuarioViewModel
+            {
+                Email = u.Email
+            }).ToListAsync();
+            var modelo = new UsuariosListadoViewModel();
+            modelo.Usuarios = usuarios;
+            modelo.Mensaje = mensaje;
+            return View(modelo);
+        }
+        [HttpPost]
+        [Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<IActionResult> HacerAdmin(string email)
+        {
+            var usuario = await context.Users.Where(u=> u.Email == email).FirstOrDefaultAsync();
+            if (usuario is  null)
+            {
+                return NotFound();
+            }
+            await userManager.AddToRoleAsync(usuario, Constantes.RolAdmin);
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol asignado correctamente a" + email });
+        }
+        [HttpPost]
+        [Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<IActionResult> RemoverAdmin(string email)
+        {
+            var usuario = await context.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+            await userManager.RemoveFromRoleAsync(usuario, Constantes.RolAdmin);
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol removido correctamente a" + email });
         }
     }
 }
