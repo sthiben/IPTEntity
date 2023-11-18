@@ -129,5 +129,43 @@ namespace IPTEntity.Controllers
             await userManager.RemoveFromRoleAsync(usuario, Constantes.RolAdmin);
             return RedirectToAction("Listado", routeValues: new { mensaje = "Rol removido correctamente a" + email });
         }
+
+        [HttpPost]
+        [Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<IActionResult> HacerEmpresa(string email)
+        {
+            var usuario = await context.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+            await userManager.AddToRoleAsync(usuario, Constantes.RolEmpresa);
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol Empresa asignado correctamente a" + email });
+        }
+        [HttpPost]
+        [Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<IActionResult> RemoverEmpresa(string email)
+        {
+            var usuario = await context.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+            await userManager.RemoveFromRoleAsync(usuario, Constantes.RolEmpresa);
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol Empresa removido correctamente a" + email });
+        }
+        [HttpGet]
+        [Authorize(Roles = Constantes.RolEmpresa)]
+        public async Task<IActionResult> ListadoUsuarios(string mensaje = null)
+        {
+            var usuarios = await context.Users.Select(u => new UsuarioViewModel
+            {
+                Email = u.Email
+            }).ToListAsync();
+            var modelo = new UsuariosListadoViewModel();
+            modelo.Usuarios = usuarios;
+            modelo.Mensaje = mensaje;
+            return View(modelo);
+        }
     }
 }

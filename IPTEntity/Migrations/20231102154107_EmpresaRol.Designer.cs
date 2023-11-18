@@ -4,6 +4,7 @@ using IPTEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPTEntity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231102154107_EmpresaRol")]
+    partial class EmpresaRol
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,35 +24,6 @@ namespace IPTEntity.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("IPTEntity.Entidades.ArchivoAdjunto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SolicitudEmpleoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Titulo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("orden")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SolicitudEmpleoId");
-
-                    b.ToTable("ArchivoAdjunto");
-                });
 
             modelBuilder.Entity("IPTEntity.Entidades.Organizacion", b =>
                 {
@@ -83,6 +57,10 @@ namespace IPTEntity.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CVUrl")
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
 
@@ -90,20 +68,6 @@ namespace IPTEntity.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NombreP")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Orden")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResumenCV")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioCreacionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UsuariosCreacionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VacanteId")
@@ -113,8 +77,6 @@ namespace IPTEntity.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioCreacionId");
 
                     b.HasIndex("VacanteId1");
 
@@ -350,28 +312,11 @@ namespace IPTEntity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("IPTEntity.Entidades.ArchivoAdjunto", b =>
-                {
-                    b.HasOne("IPTEntity.Entidades.SolicitudEmpleo", "SolicitudEmpleo")
-                        .WithMany("ArchivoAdjuntos")
-                        .HasForeignKey("SolicitudEmpleoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SolicitudEmpleo");
-                });
-
             modelBuilder.Entity("IPTEntity.Entidades.SolicitudEmpleo", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UsuarioCreacion")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCreacionId");
-
                     b.HasOne("IPTEntity.Entidades.Vacante", "Vacante")
                         .WithMany("SolicitudEmpleos")
                         .HasForeignKey("VacanteId1");
-
-                    b.Navigation("UsuarioCreacion");
 
                     b.Navigation("Vacante");
                 });
@@ -441,11 +386,6 @@ namespace IPTEntity.Migrations
             modelBuilder.Entity("IPTEntity.Entidades.Organizacion", b =>
                 {
                     b.Navigation("Vacantes");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.SolicitudEmpleo", b =>
-                {
-                    b.Navigation("ArchivoAdjuntos");
                 });
 
             modelBuilder.Entity("IPTEntity.Entidades.Vacante", b =>

@@ -4,6 +4,7 @@ using IPTEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPTEntity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231105154804_ArchivosAdjuntos")]
+    partial class ArchivosAdjuntos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,31 +93,22 @@ namespace IPTEntity.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NombreP")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Orden")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ResumenCV")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UsuarioCreacionId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UsuariosCreacionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VacanteId")
+                        .HasMaxLength(250)
                         .HasColumnType("int");
 
                     b.Property<Guid?>("VacanteId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioCreacionId");
 
                     b.HasIndex("VacanteId1");
 
@@ -363,15 +357,9 @@ namespace IPTEntity.Migrations
 
             modelBuilder.Entity("IPTEntity.Entidades.SolicitudEmpleo", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UsuarioCreacion")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCreacionId");
-
                     b.HasOne("IPTEntity.Entidades.Vacante", "Vacante")
                         .WithMany("SolicitudEmpleos")
                         .HasForeignKey("VacanteId1");
-
-                    b.Navigation("UsuarioCreacion");
 
                     b.Navigation("Vacante");
                 });

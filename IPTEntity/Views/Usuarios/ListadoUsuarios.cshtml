@@ -6,14 +6,14 @@
 <h1>Listado de usuarios</h1>
 @if (Model.Mensaje is not null)
 {
-   <div class=" alert alertalert-success" role="alert">
+    <div class=" alert alertalert-success" role="alert">
         @Model.Mensaje
-   </div>
+    </div>
 }
 
 @if (Model.Usuarios is not null)
 {
-    <form method= "post">
+    <form method="post">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -26,24 +26,12 @@
                 {
                     <tr>
                         <td>
-                            <button class=" btn btn-primary me-2" 
-                                    asp-action="HacerAdmin"
-                                        asp-route-email="@usuario.Email">Hacer Admin
-                            </button>
-                            <button class=" btn btn-secondary me-2"
-                                    asp-action="RemoverAdmin"
-                                asp-route-email="@usuario.Email">Remover Admin
-                            </button>
                             <button class=" btn btn-primary me-2"
-                                    asp-action="HacerEmpresa"
+                                    asp-action="DescargarArchivo"
                                     asp-route-email="@usuario.Email">
-                               Empresa
+                                Descarga CV
                             </button>
-                            <button class=" btn btn-secondary me-2"
-                                    asp-action="RemoverEmpresa"
-                                    asp-route-email="@usuario.Email">
-                                Remover Empresa
-                            </button>
+                         
                         </td>
                         <td>
                             @usuario.Email
@@ -54,7 +42,8 @@
         </table>
     </form>
 
-} else
+}
+else
 {
     <p>No hay usuarios para mostrar</p>
 }
