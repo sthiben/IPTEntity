@@ -81,7 +81,7 @@ namespace IPTEntity.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Nombre de usuario o password incorrecto.");
+                ModelState.AddModelError(string.Empty, "Nombre de usuario o contraseña incorrecta.");
                 return View(modelo);
             }
 
@@ -114,8 +114,20 @@ namespace IPTEntity.Controllers
             {
                 return NotFound();
             }
+
+            Boolean isVisible;
+
+            if (Constantes.RolAdmin == "admin")
+            {
+                isVisible = true;
+            }
+            else
+            {
+                isVisible = false;
+            }
+            
             await userManager.AddToRoleAsync(usuario, Constantes.RolAdmin);
-            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol asignado correctamente a" + email });
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol asignado correctamente a: " + email });
         }
         [HttpPost]
         [Authorize(Roles = Constantes.RolAdmin)]
@@ -127,7 +139,7 @@ namespace IPTEntity.Controllers
                 return NotFound();
             }
             await userManager.RemoveFromRoleAsync(usuario, Constantes.RolAdmin);
-            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol removido correctamente a" + email });
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol removido correctamente a: " + email });
         }
 
         [HttpPost]
@@ -140,7 +152,7 @@ namespace IPTEntity.Controllers
                 return NotFound();
             }
             await userManager.AddToRoleAsync(usuario, Constantes.RolEmpresa);
-            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol Empresa asignado correctamente a" + email });
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol Empresa asignado correctamente a: " + email });
         }
         [HttpPost]
         [Authorize(Roles = Constantes.RolAdmin)]
@@ -152,7 +164,7 @@ namespace IPTEntity.Controllers
                 return NotFound();
             }
             await userManager.RemoveFromRoleAsync(usuario, Constantes.RolEmpresa);
-            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol Empresa removido correctamente a" + email });
+            return RedirectToAction("Listado", routeValues: new { mensaje = "Rol Empresa removido correctamente a: " + email });
         }
         [HttpGet]
         [Authorize(Roles = Constantes.RolEmpresa)]
