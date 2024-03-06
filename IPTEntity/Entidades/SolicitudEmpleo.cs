@@ -2,38 +2,34 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IPTEntity.Entidades
 {
     public class SolicitudEmpleo
     {
+        [Key]
         public int Id { get; set; }
-        [StringLength(250)]
-        [Required]
-        public string NombreP { get; set; }
+        [Required(ErrorMessage ="El documento es obligatorio")]
+        public string UsuarioId { get; set; }
+		[Required(ErrorMessage = "El nombre es obligatorio")]
+		public string Nombres { get; set; }
+		[Required(ErrorMessage = "El apellido es obligatorio")]
+		public string Apellidos { get; set; }
+		public string ResumenCV { get; set; }
+        [AllowNull]
+		public string FileName { get; set; }
+        [AllowNull]
+		public string FilePath { get; set; }
+		public DateTime FechaSolicitud { get; set; } = DateTime.Now;
 
-        public string ResumenCV { get; set; }
-        public string Orden { get; set; }
-        public DateTime FechaSolicitud { get; set; }
-        public string UsuariosCreacionId { get; set; }
-        public IdentityUser UsuarioCreacion { get; set; }
-        public int VacanteId { get; set; }
-        public Vacante Vacante { get; set; }
-       
-        public List<ArchivoAdjunto> ArchivoAdjuntos { get; set; }
+        //public string Orden { get; set; }
+        //public IdentityUser UsuarioCreacion { get; set; }
+        //public int VacanteId { get; set; }
+        //public Vacante Vacante { get; set; }
+        //public List<ArchivoAdjunto> ArchivoAdjuntos { get; set; }
+        //public string UsuarioCreacionId { get; set; }
+        //public string Estado {  get; set; }     
 
-   
-        public string UsuarioCreacionId { get; set; }
-       
-     
-  
-     
-
-        public string Estado {  get; set; }   
-
-
-
-
-        
     }
 }

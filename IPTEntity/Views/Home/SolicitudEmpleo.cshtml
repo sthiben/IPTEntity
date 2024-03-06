@@ -1,80 +1,90 @@
-﻿@{
-    ViewData["Title"] = "Solicitud Empleo";
+﻿@using IPTEntity.Entidades
+@model SolicitudEmpleo
+@{
+	ViewData["Title"] = "Solicitud Empleo";
 }
 <h2>Llena los campos:</h2>
 <div>
-    <br />
+	<br />
 </div>
-<form>
-    <div class="row">
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Primer nombre" />
-        </div>
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Primer apellido" />
-        </div>
+<form method="post" asp-controller="SolicitudEmpleo" asp-action="Crear" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Número de cédula: " name="UsuarioId" required />
+			<span asp-validation-for="UsuarioId" class="text-danger"></span>
+		</div>
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Nombres: " name="Nombres" required />
+			<span asp-validation-for="Nombres" class="text-danger"></span>
+		</div>
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Apellidos: " name="Apellidos" required />
+			<span asp-validation-for="Apellidos" class="text-danger"></span>
 
-    </div>
+		</div>
 
-    <div>
-        <br />
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Resumen de su experiencia laboral:</label>
-        <textarea type="text" class="form-control" rows="3"></textarea>
-    </div>
+	</div>
 
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <div class="mb-3">
-            <input type="file" name="file" class="btn btn-primary btn-file">
-        </div>
-        <button type="submit" class="btn btn-primary">Subir</button>
-    </form>
-    <div class="mb-3">
-        <div>
-            <br />
-        </div>
-        <h2><label class="form-label">Tipo de discapacidad: </label></h2>
-        <select class="form-select">
-            <option value="1">Paraplejico</option>
-            <option value="2">Sordo Mudo</option>
+	<div>
+		<br />
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Resumen de su experiencia laboral:</label>
+		<textarea type="text" class="form-control" rows="3" name="ResumenCV"></textarea>
+	</div>
 
-        </select>
-    </div>
+	<form action="/upload" method="post" enctype="multipart/form-data">
+	<div class="mb-3">
+		<input type="file" name="file" class="btn btn-primary btn-file">
+	</div>
+	@* <button type="submit" class="btn btn-primary">Subir</button> *@
+	</form>
 
-    @*    <div class="form-check">
-    <input class="form-check-input" type="checkbox" checked />
-    <label class="form-label">Es Empleado</label>
-    </div>
-    <div class="form-check">
-    <input class="form-check-input" type="checkbox" checked />
-    <label class="form-label">Es Deseempleado</label>
-    </div> *@
+	<div class="mb-3">
+		<div>
+			<br />
+		</div>
+		<h2><label class="form-label">Tipo de discapacidad: </label></h2>
+		<select class="form-select">
+			<option value="1">Paraplejico</option>
+			<option value="2">Sordo Mudo</option>
+		</select>
+	</div>
 
-    <div class="form-check">
-        <input type="radio" class="form-check-input" name="miradio" />
-        <label>Empleado</label>
-    </div>
-    <div class="form-check">
-        <input type="radio" class="form-check-input" name="miradio" />
-        <label>Desempleado</label>
-    </div>
+	@*    <div class="form-check">
+	<input class="form-check-input" type="checkbox" checked />
+	<label class="form-label">Es Empleado</label>
+	</div>
+	<div class="form-check">
+	<input class="form-check-input" type="checkbox" checked />
+	<label class="form-label">Es Deseempleado</label>
+	</div> *@
+
+	<div class="form-check">
+		<input class="form-check-input" type="checkbox" name="miradio" />
+		<label>Empleado</label>
+	</div>
+	<div class="form-check">
+		<input class="form-check-input" type="checkbox" name="miradio" />
+		<label>Desempleado</label>
+	</div>
 
 
 
-    @*  <div class="mb-3">
-    <label class="form-label">Email</label>
-    <input type="email" class="form-control" disabled />
-    </div>
+	@*  <div class="mb-3">
+	<label class="form-label">Email</label>
+	<input type="email" class="form-control" disabled />
+	</div>
 
-    <div class="mb-3">
-    <label>Color de la camisa</label>
-    <input type="color" class="form-control form-control-color" value="#563d7c" />
-    </div>*@
-    <div>
-        <button class="btn btn-primary">Enviar</button>
-        @* <button class="btn btn-secondary">Cancelar</button> *@
-    </div>
+	<div class="mb-3">
+	<label>Color de la camisa</label>
+	<input type="color" class="form-control form-control-color" value="#563d7c" />
+	</div>*@
+	<br />
+	<div>
+		<button type="submit" class="btn btn-primary">Enviar</button>
+		<button class="btn btn-secondary">Cancelar</button>
+	</div>
 
 </form>
 
