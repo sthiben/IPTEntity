@@ -19,4 +19,8 @@
     <None Include="wwwroot\LogoIPT.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>

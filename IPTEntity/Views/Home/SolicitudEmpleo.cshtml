@@ -3,7 +3,7 @@
 @{
 	ViewData["Title"] = "Solicitud Empleo";
 }
-<h2>Llena los campos:</h2>
+<h2><strong>Llena los campos: </strong></h2>
 <div>
 	<br />
 </div>
@@ -20,71 +20,68 @@
 		<div class="col">
 			<input type="text" class="form-control" placeholder="Apellidos: " name="Apellidos" required />
 			<span asp-validation-for="Apellidos" class="text-danger"></span>
-
 		</div>
-
 	</div>
 
 	<div>
 		<br />
 	</div>
+
 	<div class="mb-3">
-		<label class="form-label">Resumen de su experiencia laboral:</label>
-		<textarea type="text" class="form-control" rows="3" name="ResumenCV"></textarea>
+		<label class="form-label"><h3>Resumen de tu experiencia laboral: </h3></label>
+		<textarea type="text" class="form-control" rows="3" name="ResumenCV" placeholder="Ingresa tu experiencia laboral"></textarea>
 	</div>
 
-	<form action="/upload" method="post" enctype="multipart/form-data">
-	<div class="mb-3">
-		<input type="file" name="file" class="btn btn-primary btn-file">
+	<div>
+		<h3>Ingresa aquí tu CV: </h3>
 	</div>
-	@* <button type="submit" class="btn btn-primary">Subir</button> *@
-	</form>
+
+	<div class="mb-3">
+		<input type="file" name="file" id="fileInput" class="btn btn-primary btn-file">
+	</div>
+
+	<input type="hidden" id="fileName" name="fileName">
+	<input type="hidden" id="filePath" name="filePath">
 
 	<div class="mb-3">
 		<div>
 			<br />
 		</div>
-		<h2><label class="form-label">Tipo de discapacidad: </label></h2>
-		<select class="form-select">
-			<option value="1">Paraplejico</option>
-			<option value="2">Sordo Mudo</option>
+		<h3><label class="form-label">Tipo de discapacidad: </label></h3>
+		<select name="TipoDiscapacidad" class="form-select">
+			<option value="Persona con paraplejia">Persona con paraplejia</option>
+			<option value="Persona sorda">Persona sorda</option>
 		</select>
 	</div>
 
-	@*    <div class="form-check">
-	<input class="form-check-input" type="checkbox" checked />
-	<label class="form-label">Es Empleado</label>
+	<div>
+		<h3>Estado de empleabilidad: </h3>
 	</div>
-	<div class="form-check">
-	<input class="form-check-input" type="checkbox" checked />
-	<label class="form-label">Es Deseempleado</label>
-	</div> *@
 
 	<div class="form-check">
-		<input class="form-check-input" type="checkbox" name="miradio" />
+		<input class="form-check-input" type="radio" name="EstadoEmpleado" value="Empleado" />
 		<label>Empleado</label>
 	</div>
 	<div class="form-check">
-		<input class="form-check-input" type="checkbox" name="miradio" />
+		<input class="form-check-input" type="radio" name="EstadoEmpleado" value="Desempleado" checked />
 		<label>Desempleado</label>
 	</div>
 
-
-
-	@*  <div class="mb-3">
-	<label class="form-label">Email</label>
-	<input type="email" class="form-control" disabled />
-	</div>
-
-	<div class="mb-3">
-	<label>Color de la camisa</label>
-	<input type="color" class="form-control form-control-color" value="#563d7c" />
-	</div>*@
 	<br />
 	<div>
 		<button type="submit" class="btn btn-primary">Enviar</button>
-		<button class="btn btn-secondary">Cancelar</button>
+		<button type="reset" class="btn btn-secondary">Cancelar</button>
 	</div>
 
 </form>
+
+<script>
+	document.getElementById('fileInput').addEventListener('change', function(event) {
+		var file = event.target.files[0];
+		if (file) {
+			document.getElementById('fileName').value = file.name;
+			document.getElementById('filePath').value = URL.createObjectURL(file);
+		}
+	});
+</script>
 

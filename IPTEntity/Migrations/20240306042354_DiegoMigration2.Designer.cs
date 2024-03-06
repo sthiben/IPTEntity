@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPTEntity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240304054349_DiegoMigration")]
-    partial class DiegoMigration
+    [Migration("20240306042354_DiegoMigration2")]
+    partial class DiegoMigration2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,15 +37,16 @@ namespace IPTEntity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EstadoEmpleado")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("FechaSolicitud")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FileName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombres")
@@ -53,6 +54,9 @@ namespace IPTEntity.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResumenCV")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoDiscapacidad")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsuarioId")

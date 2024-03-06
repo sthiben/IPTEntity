@@ -34,15 +34,16 @@ namespace IPTEntity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EstadoEmpleado")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("FechaSolicitud")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FileName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombres")
@@ -50,6 +51,9 @@ namespace IPTEntity.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResumenCV")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoDiscapacidad")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsuarioId")
