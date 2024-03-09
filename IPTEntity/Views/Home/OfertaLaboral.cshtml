@@ -1,0 +1,80 @@
+﻿@using IPTEntity.Entidades
+@model OfertaLaboral
+@{
+	ViewData["Title"] = "Oferta Laboral";
+}
+<h2 style="padding: 5px"><strong>Llena los campos: </strong></h2>
+
+<form method="post" asp-controller="OfertaLaboral" asp-action="CrearOfertaLaboral">
+
+	<div class="row mt-3" style="padding: 15px">
+		<input type="text" class="form-control" placeholder="Nombre de la empresa: " name="NombreEmpresa" required />
+		<span asp-validation-for="NombreEmpresa" class="text-danger"></span>
+	</div>
+
+	<div class="row mt-3" style="padding: 15px">
+		<input type="text" class="form-control" placeholder="Titulo de la oferta: " name="TituloOferta" required />
+		<span asp-validation-for="TituloOferta" class="text-danger"></span>
+	</div>
+
+	<div>
+		<br />
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label"><h3>Descripción de la oferta: </h3></label>
+		<textarea type="text" class="form-control" rows="3" name="DescripcionOferta" placeholder="Funciones a desempeñar, experiencia solicitada, etc."></textarea>
+	</div>
+
+	<div class="mb-4"><h3>Seleccione la profesión que se ajusta al cargo: </h3></div>
+	<div class="mb-4">
+		<select id="DropListProfesiones" name="Profesion" class="form-select"></select>
+	</div>
+
+	<div class="mb-4">
+		<div>
+			<br />
+		</div>
+		<h3><label class="form-label">Tipo de discapacidad: </label></h3>
+		<select name="TipoDiscapacidad" class="form-select">
+			<option value="Persona con paraplejia">Persona con paraplejia</option>
+			<option value="Persona sorda">Persona sorda</option>
+		</select>
+	</div>
+
+	<div>
+		<button type="submit" class="btn btn-primary">Enviar</button>
+		<button type="reset" class="btn btn-secondary">Cancelar</button>
+	</div>
+</form>
+
+<script>
+	var select = document.getElementById("DropListProfesiones");
+
+
+	var opciones = [
+		"Ingeniería Mecánica",
+		"Ingeniería Industrial",
+		"Ingeniería Mecátronica",
+		"Ingeniería Forestal",
+		"Ingeniería Catastral",
+		"Ingeniería Qúímica",
+		"Ingeniería de Software",
+		"Ingeniería de Sistemas",
+		"Bachiller",
+		"Técnico en programación de software",
+		"Técnico en mantenimiento industrial",
+
+	];
+
+	opciones.forEach(function (opcion) {
+		var option = document.createElement("option");
+		option.text = opcion;
+		select.add(option);
+	});
+
+	select.addEventListener("change", function () {
+		var selectedValue = select.value;
+	});
+</script>
+

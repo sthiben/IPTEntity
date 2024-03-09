@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using IPTEntity;
 using Microsoft.Extensions.Hosting;
 
-namespace TuProyecto.Controllers
+namespace IPTEntity.Controllers
 {
 	public class SolicitudEmpleoController : Controller
 	{

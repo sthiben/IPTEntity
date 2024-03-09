@@ -24,6 +24,10 @@ namespace IPTEntity.Controllers
         public IActionResult SolicitudEmpleo()
         {
             return View();
+        } 
+        public IActionResult OfertaLaboral()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

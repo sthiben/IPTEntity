@@ -18,6 +18,7 @@ namespace IPTEntity
         //public DbSet<Organizacion> Organizaciones { get; set; }
         //public DbSet<Vacante> Vacantes { get; set; }
         public DbSet<SolicitudEmpleo> SolicitudEmpleos { get; set; }
+        public DbSet<OfertaLaboral> OfertaLaboral { get; set; }
 
         //public DbSet<ArchivoAdjunto> ArchivoAdjunto { get; set; }
     }
