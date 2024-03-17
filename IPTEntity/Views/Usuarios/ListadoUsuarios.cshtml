@@ -1,7 +1,10 @@
 ﻿@using IPTEntity.Servicios
 @using Microsoft.AspNetCore.Identity
+@using System.Linq
+@using Microsoft.EntityFrameworkCore;
 @inject UserManager<IdentityUser> UserManager
-@model UsuariosListadoViewModel
+@inject ApplicationDbContext _context
+@model IPTEntity.Models.UsuariosListadoViewModel
 @{
 	ViewData["Title"] = "Listado de usuarios";
 	Layout = "../shared/_layout";
@@ -14,36 +17,56 @@
 	</div>
 }
 
-@if (Model.Usuarios is not null)
+@if (Model.Usuarios != null)
 {
 	<form method="post">
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<td>Hojas de vida</td>
+					<td>Nombres</td>
+					<td>Apellidos</td>
 					<td>Usuario</td>
+					<td>Correo</td>
+					<td>Profesión</td>
+					<td>Hoja de vida</td>
 				</tr>
 			</thead>
 			<tbody>
 				@foreach (var usuario in Model.Usuarios)
 				{
 					var user = await UserManager.FindByEmailAsync(usuario.Email);
+					var userId = user.Id;
+					var userSolEmpl = await _context.SolicitudEmpleos.FirstOrDefaultAsync(se => se.GuId == userId);
+					@* 	var xxx = await _context.solicitudEmpleos.FirstOrDefaultAsync(se => se.GuId == user.Id); *@
 					var rolesUsuario = await UserManager.GetRolesAsync(user);
 
 					@if (rolesUsuario.Contains(Constantes.RolUsuario))
 					{
+						var GuId = user.Id;
 						<tr>
 							<td>
-								<button class=" btn btn-primary me-2"
-										asp-controller=""
-										asp-action="DescargarArchivo"
-										asp-route-email="@usuario.Email">
-									Descarga CV
-								</button>
-
+								@userSolEmpl.Nombres
+							</td>
+							<td>
+								@userSolEmpl.Apellidos
+							</td>
+							<td>
+								@usuario.Username
 							</td>
 							<td>
 								@usuario.Email
+							</td>
+							<td>
+								Profesion
+							</td>
+							<td>
+								<button class=" btn btn-primary me-2"
+										asp-controller="DescargarArchivo"
+										asp-action="DescargarArchivo"
+										asp-route-GuId=@GuId>
+									Descarga CV
+								</button>
+
 							</td>
 						</tr>
 					}

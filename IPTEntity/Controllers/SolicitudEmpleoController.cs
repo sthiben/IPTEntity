@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using IPTEntity;
 using Microsoft.Extensions.Hosting;
+using IPTEntity.Models;
+using IPTEntity.Servicios;
 
 namespace IPTEntity.Controllers
 {
@@ -11,11 +13,13 @@ namespace IPTEntity.Controllers
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly IWebHostEnvironment _hostEnvironment;
+		private readonly IUserGetId _userGetId;
 
-		public SolicitudEmpleoController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
+		public SolicitudEmpleoController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment, IUserGetId userGetId)
 		{
 			_context = context;
 			_hostEnvironment = hostEnvironment;
+			_userGetId = userGetId;
 		}
 
 		[HttpPost]
@@ -23,8 +27,10 @@ namespace IPTEntity.Controllers
 		{
 			if (ModelState.IsValid && file != null)
 			{
-				string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
-				string uniqueFileName = solicitudEmpleo.UsuarioId + "_" + file.FileName;
+				solicitudEmpleo.GuId = _userGetId.getCurrentUserId();
+
+                string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
+				string uniqueFileName = solicitudEmpleo.GuId + "_" + file.FileName;
 				string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
 				solicitudEmpleo.EstadoEmpleado = (solicitudEmpleo.EstadoEmpleado.Contains("Empleado")) ? "Empleado" : "Desempleado";

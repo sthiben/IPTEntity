@@ -39,7 +39,7 @@ namespace IPTEntity.Controllers
 				return View(modelo);
 			}
 
-			var usuario = new IdentityUser() { Email = modelo.Email, UserName = modelo.Email };
+			var usuario = new IdentityUser() { Email = modelo.Email, UserName = modelo.Username };
 
 			var resultado = await userManager.CreateAsync(usuario, password: modelo.Password);
 
@@ -48,7 +48,7 @@ namespace IPTEntity.Controllers
 				await userManager.AddToRoleAsync(usuario, "usuario");
 
 				await signInManager.SignInAsync(usuario, isPersistent: true);
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("Login", "Usuarios");
 			}
 			else
 			{
@@ -74,15 +74,15 @@ namespace IPTEntity.Controllers
 				return View(modelo);
 			}
 
-			var resultado = await signInManager.PasswordSignInAsync(modelo.Email,
-				modelo.Password, modelo.Recuerdame, lockoutOnFailure: false);
+			var user = await userManager.FindByEmailAsync(modelo.Email);
+			var resultado = await signInManager.PasswordSignInAsync(user.UserName, modelo.Password, modelo.Recuerdame, lockoutOnFailure: false);
 
 			if (resultado.Succeeded)
 			{
 				return RedirectToAction("Index", "Home");
 			}
 			else
-			{
+			{ 
 				ModelState.AddModelError(string.Empty, "Nombre de usuario o contraseña incorrecta.");
 				return View(modelo);
 			}
@@ -100,12 +100,13 @@ namespace IPTEntity.Controllers
 		{
 			var usuarios = await context.Users.Select(u => new UsuarioViewModel
 			{
-				Email = u.Email
+				Email = u.Email,
+				Username = u.UserName
 			}).ToListAsync();
 			var modelo = new UsuariosListadoViewModel();
 			modelo.Usuarios = usuarios;
 			modelo.Mensaje = mensaje;
-			return View(modelo);
+			return View("listado", modelo);
 		}
 		[HttpPost]
 		[Authorize(Roles = Constantes.RolAdmin)]
@@ -194,7 +195,8 @@ namespace IPTEntity.Controllers
 		{
 			var usuarios = await context.Users.Select(u => new UsuarioViewModel
 			{
-				Email = u.Email
+				Email = u.Email,
+				Username = u.UserName
 			}).ToListAsync();
 			var modelo = new UsuariosListadoViewModel();
 			modelo.Usuarios = usuarios;
