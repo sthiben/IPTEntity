@@ -1,60 +1,119 @@
-﻿@model UsuariosListadoViewModel
+﻿@using IPTEntity.Servicios
+@using Microsoft.AspNetCore.Identity
+@using System.Linq
+@using Microsoft.EntityFrameworkCore;
+@inject UserManager<IdentityUser> UserManager
+@model UsuariosListadoViewModel
 @{
-    ViewData["Title"] = "Listado de usuarios";
-    Layout = "../shared/_layout";
+	ViewData["Title"] = "Listado de usuarios";
+	Layout = "../shared/_layout";
 }
 <h1>Listado de usuarios</h1>
 @if (Model.Mensaje is not null)
 {
-   <div class=" alert alertalert-success" role="alert">
-        @Model.Mensaje
-   </div>
+	<div class=" alert alertalert-success" role="alert">
+		@Model.Mensaje
+	</div>
 }
 
 @if (Model.Usuarios is not null)
 {
-    <form method= "post">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <td><strong>Acción</strong></td>
-                    <td><strong>Email</strong></td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var usuario in Model.Usuarios)
-                {
-                    <tr>
-                        <td>
-                            <button class=" btn btn-success me-2"
-                                    asp-action="HacerAdmin"
-                                        asp-route-email="@usuario.Email">Hacer Admin
-                            </button>
-                            <button class=" btn btn-danger me-2"
-                                    asp-action="RemoverAdmin"
-                                asp-route-email="@usuario.Email">Remover Admin
-                            </button>
-                            <button class=" btn btn-info me-2"
-                                    asp-action="HacerEmpresa"
-                                    asp-route-email="@usuario.Email">
-                               Empresa
-                            </button>
-                            <button class=" btn btn-dark me-2"
-                                    asp-action="RemoverEmpresa"
-                                    asp-route-email="@usuario.Email">
-                                Remover Empresa
-                            </button>
-                        </td>
-                        <td>
-                            @usuario.Email
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </form>
+	<form method="post">
+		<table id="tabla-usuarios" class="table table-hover">
+			<thead>
+				<tr>
+					<td><strong>Acción</strong></td>
+					<td><strong>Email</strong></td>
+					<td id="rolActual"><strong>Rol actual</strong></td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var usuario in Model.Usuarios)
+				{
+					var user = await UserManager.FindByEmailAsync(usuario.Email);
+					var rolesUsuario = await UserManager.GetRolesAsync(user);
+					<tr>
+						<td>
+							@if (rolesUsuario.Contains(Constantes.RolUsuario) || rolesUsuario.Contains(Constantes.RolEmpresa))
+							{
+								<button class=" btn btn-success me-2"
+										asp-action="HacerAdmin"
+										asp-route-email="@usuario.Email">
+									Hacer Admin
+								</button>
+							}
 
-} else
-{
-    <p>No hay usuarios para mostrar</p>
+							@if (rolesUsuario.Contains(Constantes.RolAdmin))
+							{
+								<button class=" btn btn-danger me-2"
+										asp-action="RemoverAdmin"
+										asp-route-email="@usuario.Email">
+									Remover Admin
+								</button>
+
+							}
+
+							@if (rolesUsuario.Contains(Constantes.RolUsuario))
+							{
+								<button class=" btn btn-info me-2"
+										asp-action="HacerEmpresa"
+										asp-route-email="@usuario.Email">
+									Hacer Empresa
+								</button>
+							}
+
+							@if (rolesUsuario.Contains(Constantes.RolEmpresa))
+							{
+								<button class=" btn btn-dark"
+										asp-action="RemoverEmpresa"
+										asp-route-email="@usuario.Email">
+									Remover Empresa
+								</button>
+							}
+						</td>
+						<td>
+							@usuario.Email
+						</td>
+						<td>
+							@foreach(var rol in rolesUsuario)
+							{
+								string result = char.ToUpper(rol[0]) + rol.Substring(1);
+								@result
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</form>
+
 }
+else
+{
+	<p>No hay usuarios para mostrar</p>
+}
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		var thRolActual = document.getElementById("rolActual");
+		thRolActual.addEventListener("click", function () {
+			sortTable("tabla-usuarios", 2);
+		});
+	});
+
+	function sortTable(tableId, columnIdx) {
+		var table = document.getElementById(tableId);
+		var tbody = table.querySelector("tbody");
+		var rows = Array.from(tbody.querySelectorAll("tr"));
+
+		rows.sort(function (rowA, rowB) {
+			var cellA = rowA.cells[columnIdx].textContent.trim();
+			var cellB = rowB.cells[columnIdx].textContent.trim();
+			return cellA.localeCompare(cellB);
+		});
+
+		rows.forEach(function (row) {
+			tbody.appendChild(row);
+		});
+	}
+</script>

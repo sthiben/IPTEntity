@@ -82,7 +82,7 @@ namespace IPTEntity.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 			else
-			{ 
+			{
 				ModelState.AddModelError(string.Empty, "Nombre de usuario o contraseña incorrecta.");
 				return View(modelo);
 			}
@@ -126,16 +126,6 @@ namespace IPTEntity.Controllers
 			if (await userManager.IsInRoleAsync(usuario, "empresa"))
 			{
 				await userManager.RemoveFromRoleAsync(usuario, "empresa");
-			}
-			Boolean isVisible;
-
-			if (Constantes.RolAdmin == "admin")
-			{
-				isVisible = true;
-			}
-			else
-			{
-				isVisible = false;
 			}
 
 			await userManager.AddToRoleAsync(usuario, Constantes.RolAdmin);

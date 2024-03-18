@@ -17,6 +17,7 @@ namespace IPTEntity.Entidades
 		public string Nombres { get; set; }
 		[Required(ErrorMessage = "El apellido es obligatorio")]
 		public string Apellidos { get; set; }
+		public string Profesion { get; set; }
 		public string ResumenCV { get; set; }
 		public string FileName { get; set; }
 		public string FilePath { get; set; }
