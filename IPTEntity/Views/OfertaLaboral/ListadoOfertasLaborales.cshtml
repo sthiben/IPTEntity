@@ -1,0 +1,57 @@
+﻿@using IPTEntity.Servicios
+@using Microsoft.AspNetCore.Identity
+@using System.Linq
+@using Microsoft.EntityFrameworkCore;
+@inject UserManager<IdentityUser> UserManager
+@inject ApplicationDbContext _context
+@model IPTEntity.Models.OfertasLaboralesListViewModel
+@{
+	ViewData["Title"] = "Listado de ofertas de empleo";
+	Layout = "../shared/_layout";
+}
+<h1>Listado de ofertas de empleo</h1>
+
+<div class="input-group">
+	<input type="search" class="form-control rounded" placeholder="Buscar por profesión" aria-label="Search" aria-describedby="search-addon" />
+	<button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>Buscar</button>
+</div>
+
+<form method="post">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<td class="fw-bold">Nombre empresa</td>
+				<td class="fw-bold">Título de la oferta</td>
+				<td class="fw-bold">Profesión</td>
+				<td class="fw-bold"></td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var ofertaEmpleo in Model.OfertasLaborales)
+			{
+				<tr>
+					<td>
+						@ofertaEmpleo.NombreEmpresa
+					</td>
+					<td>
+						@ofertaEmpleo.TituloOferta
+					</td>
+					<td>
+						@ofertaEmpleo.Profesion
+					</td>
+					<td>
+						<button class=" btn btn-primary me-2"
+								asp-controller=""
+								asp-action=""
+								asp-route-GuId=>
+							Ver información
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</form>
+
+
+<script></script>

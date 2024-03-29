@@ -15,7 +15,7 @@ namespace IPTEntity.Controllers
 
         public IActionResult Index()
         {
-            return View();
+			return View();
         }
 
         public IActionResult SolicitudEmpleo()
@@ -30,6 +30,10 @@ namespace IPTEntity.Controllers
 		public IActionResult EditarSolicitudEmpleo()
 		{
 			return View("EditarSolicitudEmpleo");
+		}
+		public IActionResult RegistroEmpresa()
+		{
+			return View();
 		}
 
 

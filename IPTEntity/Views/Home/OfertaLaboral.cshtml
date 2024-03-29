@@ -1,5 +1,14 @@
 ﻿@using IPTEntity.Entidades
 @model OfertaLaboral
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.DependencyInjection
+@inject UserManager<IdentityUser> UserManager
+@{
+	var empresaId = UserManager.GetUserId(User);
+	var dbContext = Context.RequestServices.GetRequiredService<ApplicationDbContext>();
+	var empresa = dbContext.Empresas.Find(empresaId);
+}
 @{
 	ViewData["Title"] = "Oferta Laboral";
 }
@@ -8,8 +17,7 @@
 <form method="post" asp-controller="OfertaLaboral" asp-action="CrearOfertaLaboral">
 
 	<div class="row mt-3" style="padding: 15px">
-		<input type="text" class="form-control" placeholder="Nombre de la empresa: " name="NombreEmpresa" required />
-		<span asp-validation-for="NombreEmpresa" class="text-danger"></span>
+		<input type="text" class="form-control" name="NombreEmpresa" required value="@empresa.NombreEmpresa" readonly/>
 	</div>
 
 	<div class="row mt-3" style="padding: 15px">
@@ -31,7 +39,7 @@
 		<select id="DropListProfesiones" name="Profesion" class="form-select"></select>
 	</div>
 
-	<div class="mb-4">
+@* 	<div class="mb-4">
 		<div>
 			<br />
 		</div>
@@ -40,7 +48,7 @@
 			<option value="Persona con paraplejia">Persona con paraplejia</option>
 			<option value="Persona sorda">Persona sorda</option>
 		</select>
-	</div>
+	</div> *@
 
 	<div>
 		<button type="submit" class="btn btn-primary">Enviar</button>

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IPTEntity.Entidades
 {
@@ -6,11 +7,11 @@ namespace IPTEntity.Entidades
 	{
 		[Key]
 		public int OfertaId { get; set; }
-		public string NombreEmpresa { get; set; }
+		[ForeignKey("Empresas")]
+		public string EmpresaId { get; set; }
 		public string TituloOferta { get; set; }
 		public string DescripcionOferta { get; set; }
 		public string Profesion { get; set; }
-		//public string TipoDiscapacidad { get; set; }
 
 	}
 }

@@ -6,33 +6,33 @@
 
 
 
-<h1>Registrate</h1>
+<h1 class="display-5 fw-bold">Regístrate</h1>
 
 <div class="card">
 	<div class="card-body">
 		<form asp-action="Registro">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-			<div class="mb-3">
-				<label asp-for="Email" class="form-label"></label>
-				<input asp-for="Email" autocomplete="off" class="form-control" />
-				<span asp-validation-for="Email" class="text-danger"></span>
+			<div class="mb-3 display-5">
+				<label asp-for="Email" class="form-label">Correo electrónico: </label>
+				<input asp-for="Email" autocomplete="off" class="form-control" style="font-size: 2rem" />
+				<span asp-validation-for="Email" class="text-danger" style="font-size: 1.5rem"></span>
 			</div>
 
-			<div class="mb-3">
-				<label asp-for="Username" class="form-label"></label>
-				<input asp-for="Username" autocomplete="off" class="form-control" />
-				<span asp-validation-for="Username" class="text-danger"></span>
+			<div class="mb-3 display-5">
+				<label asp-for="Username" class="form-label">Nombre de usuario: </label>
+				<input asp-for="Username" autocomplete="off" class="form-control" style="font-size: 2rem" />
+				<span asp-validation-for="Username" class="text-danger" style="font-size: 1.5rem"></span>
 			</div>
 
-			<div class="mb-3">
-				<label asp-for="Password" class="form-label"></label>
-				<input asp-for="Password" class="form-control" />
-				<span asp-validation-for="Password" class="text-danger"></span>
+			<div class="mb-3 display-5">
+				<label asp-for="Password" class="form-label">Contraseña: </label>
+				<input asp-for="Password" class="form-control" style="font-size: 2rem" />
+				<span asp-validation-for="Password" class="text-danger" style="font-size: 1.5rem"></span>
 			</div>
 
-			<button class="btn-primary btn">Registrate</button>
-			<a class="btn btn-success" asp-action="login">Deseo Loguearme</a>
+			<button class="btn-primary btn display-" style="font-size: 2rem ">Regístrate</button>
+			<a class="btn btn-success" asp-action="login" style="font-size: 2rem">Ya tengo cuenta</a>
 
 		</form>
 	</div>

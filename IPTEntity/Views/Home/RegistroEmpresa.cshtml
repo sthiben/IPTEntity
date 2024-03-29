@@ -1,0 +1,47 @@
+﻿@using IPTEntity.Entidades
+@model Empresas
+@{
+	ViewData["Title"] = "Registro Empresa";
+}
+<h2><strong>Registro único empresas: </strong></h2>
+<div>
+	<br />
+</div>
+<form method="post" asp-controller="RegistroEmpresa" asp-action="Registro" enctype="multipart/form-data">
+	<div class="col">
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Nombre empresa: " name="NombreEmpresa" required />
+			<span asp-validation-for="NombreEmpresa" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Dirección: " name="Direccion" required />
+			<span asp-validation-for="Direccion" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Teléfono: " name="Telefono" required />
+			<span asp-validation-for="Telefono" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Correo electrónico: " name="CorreoElectronico" required />
+			<span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="col">
+			<input type="text" class="form-control" placeholder="Sitio web: " name="SitioWeb" required />
+			<span asp-validation-for="SitioWeb" class="text-danger"></span>
+		</div>
+	</div>
+	<br />
+	<div>
+		<button type="submit" class="btn btn-primary d-inline-flex mr-2">Enviar</button>
+		<button type="button" class="btn btn-secondary d-inline-flex mr-2" onclick="window.location.href='@Url.Action("Index", "Home")'">Cancelar</button>
+	</div>
+
+</form>
+
+
+
+
