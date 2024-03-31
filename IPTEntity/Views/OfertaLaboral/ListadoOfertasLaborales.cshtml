@@ -11,12 +11,27 @@
 }
 <h1>Listado de ofertas de empleo</h1>
 
-<div class="input-group">
-	<input type="search" class="form-control rounded" placeholder="Buscar por profesión" aria-label="Search" aria-describedby="search-addon" />
-	<button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>Buscar</button>
-</div>
 
-<form method="post">
+<form asp-controller="OfertaLaboral" asp-action="FiltrarPorProfesion" method="post">
+	<input type="hidden" name="ProfesionSeleccionada" id="ProfesionSeleccionada" />
+	<div class="d-inline-flex justify-content-end align-items center w-100">
+		<div class="d-flex mx-2 mt-1 align-items-center">
+			<h4>Buscar por profesión: </h4>
+		</div>
+		<div class="">
+			<select id="DropListProfesiones" name="Profesion" class="form-select"></select>
+		</div>
+		<button type="submit" class="btn btn-primary" asp-for="OfertasLaborales">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+			</svg>
+		</button>
+	</div>
+</form>
+
+<br />
+
+<form method="post" asp-controller="OfertaLaboral" asp-action="VerInformacionEmpresa">
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -40,10 +55,7 @@
 						@ofertaEmpleo.Profesion
 					</td>
 					<td>
-						<button class=" btn btn-primary me-2"
-								asp-controller=""
-								asp-action=""
-								asp-route-GuId=>
+						<button type="submit" class=" btn btn-primary me-2" name="empresaId" value="@ofertaEmpleo.EmpresaId">
 							Ver información
 						</button>
 					</td>
@@ -54,4 +66,69 @@
 </form>
 
 
-<script></script>
+<script>
+	var select = document.getElementById("DropListProfesiones");
+
+
+	var opciones = [
+		"",
+		"Ingeniería Mecánica",
+		"Ingeniería Industrial",
+		"Ingeniería Mecátronica",
+		"Ingeniería Forestal",
+		"Ingeniería Catastral",
+		"Ingeniería Qúímica",
+		"Ingeniería de Software",
+		"Ingeniería de Sistemas",
+		"Bachiller",
+		"Técnico en programación de software",
+		"Técnico en mantenimiento industrial",
+		"Enfermería",
+		"Servicios generales",
+		"Guarda de seguridad",
+		"Asistente administrativo virtual",
+		"Servicio al cliente en línea",
+		"Traductor o intérprete",
+		"Trabajo de investigación en línea",
+		"Redacción de contenido",
+		"Programador web",
+		"Edición de video o audio",
+		"Tutor en línea",
+		"Trabajo de diseño gráfico",
+		"Consultoría en accesibilidad",
+		"Empleado de tienda en línea",
+		"Asistente de biblioteca",
+		"Auxiliar de almacén",
+		"Operador de servicio al cliente",
+		"Empacador en línea de productos",
+		"Asistente de limpieza en empresas",
+		"Recepcionista",
+		"Auxiliar de cafetería",
+		"Ayudante de cocina",
+		"Empleado de tienda minorista",
+		"Recepcionista en empresas o instituciones",
+		"Trabajador de ensamblaje en fábricas",
+		"Auxiliar de lavandería"
+
+	];
+
+	opciones.forEach(function (opcion) {
+		var option = document.createElement("option");
+		option.text = opcion;
+		select.add(option);
+	});
+
+	select.addEventListener("change", function () {
+		var selectedValue = select.value;
+	});
+</script>
+
+<script>
+	var select = document.getElementById("DropListProfesiones");
+	var hiddenField = document.getElementById("ProfesionSeleccionada");
+
+	select.addEventListener("change", function () {
+		hiddenField.value = select.value;
+	});
+</script>
+
