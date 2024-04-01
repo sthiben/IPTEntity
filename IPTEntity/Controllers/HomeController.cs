@@ -42,11 +42,14 @@ namespace IPTEntity.Controllers
 			var userId = _userManager.GetUserId(User);
 			var empresaRegistrada = _context.Empresas.Any(e => e.UsuarioId == userId && e.EstaRegistrada);
 
-			if (!empresaRegistrada)
+			if (empresaRegistrada)
 			{
+				TempData["Status"] = "error";
+				TempData["Mensaje"] = "La empresa ya está registrada.";
 				return View();
 			}
-			return RedirectToAction("Index", "Home");
+			TempData["Status"] = "pending";
+			return View();
 		}
 
 

@@ -31,17 +31,20 @@ namespace IPTEntity.Controllers
 
 			var empresaActual = await _userManager.GetUserAsync(User);
 			empresa.EmpresaId = empresaActual.Id;
-			empresa.EstaRegistrada = true;
 			empresa.UsuarioId = empresa.EmpresaId;
 
 			if (ModelState.IsValid)
 			{
+				empresa.EstaRegistrada = true;
 				_context.Add(empresa);
 				await _context.SaveChangesAsync();
-				return RedirectToAction("Index", "Home");
+				TempData["Status"] = "success";
+				TempData["Mensaje"] = "Empresa registrada con éxito";
+				return View("~/Views/Home/RegistroEmpresa.cshtml");
 			}
-
-			return RedirectToAction("RegistroEmpresa", "Home");
+			TempData["Status"] = "error";
+			TempData["Mensaje"] = "Error al registrar la empresa";
+			return View("~/Views/Home/RegistroEmpresa.cshtml");
 		}
 	}
 }

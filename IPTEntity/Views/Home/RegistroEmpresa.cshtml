@@ -2,7 +2,13 @@
 @model Empresas
 @{
 	ViewData["Title"] = "Registro Empresa";
+	var mensaje = TempData["Mensaje"] as string;
+	var status = TempData["Status"] as string;
 }
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
 <h2><strong>Registro único empresas: </strong></h2>
 <div>
 	<br />
@@ -42,6 +48,40 @@
 
 </form>
 
+
+@if (status.Contains("error"))
+{
+	<script>
+		var mensaje = '@Html.Raw(mensaje)';
+
+		Swal.fire({
+			icon: "error",
+			title: "Error",
+			text: mensaje,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = '@Url.Action("Index", "Home")';
+			}
+		});
+	</script>
+}
+else if(status.Contains("success"))
+{
+	<script>
+		var mensaje = '@Html.Raw(mensaje)';
+
+		Swal.fire({
+			position: "center",
+			icon: "success",
+			title: mensaje,
+			timer: 5000,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = '@Url.Action("Index", "Home")';
+			}
+		});
+	</script>
+}
 
 
 
