@@ -193,5 +193,31 @@ namespace IPTEntity.Controllers
 			modelo.Mensaje = mensaje;
 			return View(modelo);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> FiltrarPorProfesion(string profesionSeleccionada)
+		{
+			if (!string.IsNullOrEmpty(profesionSeleccionada))
+			{
+				var usuariosFiltrados = await context.SolicitudEmpleos
+					.Where(se => se.Profesion == profesionSeleccionada)
+					.ToListAsync();
+
+				var usuarioViewModel = (from se in usuariosFiltrados
+										join users in context.Users on se.GuId equals users.Id
+										select new UsuarioViewModel
+										{
+											Email = users.Email,
+											Username= users.UserName,
+										}).ToList();
+
+				var usuariosListadoViewModel = new UsuariosListadoViewModel
+				{
+					Usuarios = usuarioViewModel
+				};
+				return View("ListadoUsuarios", usuariosListadoViewModel);
+			}
+			return RedirectToAction("ListadoOfertasLaborales", "OfertaLaboral");
+		}
 	}
 }

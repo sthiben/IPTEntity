@@ -19,7 +19,7 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 .bg-info.bg-gradient" style="background-color: #056d90">
 			<div class="container-fluid">
 				@* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Jair es gay</a> *@
 				<img src="\LogoIPT.jpg" alt="Logo de la empresa" class="rounded-pill" width="120px" height="100px" />
@@ -30,43 +30,43 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between px-3">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item" style="font-size: 25px">
-							<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+							<a class="nav-link text-dark fw-bold text-white" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
 						</li>
 
 						@if (User.IsInRole(Constantes.RolUsuario))
 						{
 							<li class="nav-item" style="font-size: 25px">
-								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home" asp-action="SolicitudEmpleo">Solicitud empleo</a>
+								<a class="nav-link text-dark fw-bold text-white" asp-area="" asp-controller="Home" asp-action="SolicitudEmpleo">Solicitud empleo</a>
 							</li>
 							<li class="nav-item" style="font-size: 25px">
-								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="OfertaLaboral" asp-action="ListadoOfertasLaborales">Ofertas Laborales</a>
+								<a class="nav-link text-dark fw-bold text-white" asp-area="" asp-controller="OfertaLaboral" asp-action="ListadoOfertasLaborales">Ofertas Laborales</a>
 							</li>
 						}
 
 						@if (User.IsInRole(Constantes.RolEmpresa))
 						{
 							<li class="nav-item" style="font-size: 25px">
-								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home" asp-action="OfertaLaboral">Oferta de Empleo</a>
+								<a class="nav-link text-dark fw-bold text-white" asp-area="" asp-controller="Home" asp-action="OfertaLaboral">Oferta de Empleo</a>
 							</li>
 							<li class="nav-item" style="font-size: 25px">
-								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Usuarios" asp-action="ListadoUsuarios">Personas Disponibles Para Empleo</a>
+								<a class="nav-link text-dark fw-bold text-white" asp-area="" asp-controller="Usuarios" asp-action="ListadoUsuarios">Personas Disponibles Para Empleo</a>
 							</li>
 							<li class="nav-item" style="font-size: 25px">
-								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home" asp-action="RegistroEmpresa">Registro</a>
+								<a class="nav-link text-dark fw-bold text-white" asp-area="" asp-controller="Home" asp-action="RegistroEmpresa">Registro</a>
 							</li>
 
 						}
 
 						@if (User.IsInRole(Constantes.RolAdmin))
 						{
-							<li class="nav-item" style="font-size: 25px">
+		@* 					<li class="nav-item" style="font-size: 25px">
 								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home" asp-action="SolicitudEmpleo">Solicitud empleo</a>
 							</li>
 							<li class="nav-item" style="font-size: 25px">
 								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home" asp-action="OfertaLaboral">Oferta de Empleo</a>
-							</li>
+							</li> *@
 							<li class="nav-item" style="font-size: 25px">
-								<a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Usuarios" asp-action="Listado">Listado de usuarios</a>
+								<a class="nav-link text-dark fw-bold text-white" asp-area="" asp-controller="Usuarios" asp-action="Listado">Listado de usuarios</a>
 							</li>
 						}
 

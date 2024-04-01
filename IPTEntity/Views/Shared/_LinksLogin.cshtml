@@ -5,12 +5,12 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <span class="nav-link text-dark">Bienvenido, @User.Identity.Name</span>
+            <span class="nav-link text-white">Bienvenido, @User.Identity.Name</span>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-action="logout" asp-controller="usuarios">
-                
-                    <button type="submit" class="nav-link btn btn-link text-dark">
+
+                <button type="submit" class="nav-link btn btn-link text-white">
                     <strong>Cerrar sesión</strong>
                 </button>
             </form>
@@ -19,12 +19,12 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link dark-text" asp-controller="usuarios" asp-action="Registro">
+            <a class="nav-link dark-text text-white" asp-controller="usuarios" asp-action="Registro">
                 Registro
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link dark-text" asp-controller="usuarios" asp-action="Login">
+            <a class="nav-link dark-text text-white" asp-controller="usuarios" asp-action="Login">
                 Iniciar sesión
             </a>
         </li>
