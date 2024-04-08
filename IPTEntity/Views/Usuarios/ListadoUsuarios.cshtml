@@ -55,11 +55,15 @@
 				@foreach (var usuario in Model.Usuarios)
 				{
 					var user = await UserManager.FindByEmailAsync(usuario.Email);
-					var userSolEmpl = await _context.SolicitudEmpleos.FirstOrDefaultAsync(se => se.GuId == user.Id);
 					var rolesUsuario = await UserManager.GetRolesAsync(user);
 
 					@if (rolesUsuario.Contains(Constantes.RolUsuario))
 					{
+						var userSolEmpl = await _context.SolicitudEmpleos.FirstOrDefaultAsync(se => se.GuId == user.Id);
+						@if( userSolEmpl == null)
+						{
+							continue;
+						}
 						var GuId = user.Id;
 						<tr>
 							<td>

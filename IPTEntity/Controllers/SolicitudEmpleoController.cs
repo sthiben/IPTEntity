@@ -73,12 +73,14 @@ namespace IPTEntity.Controllers
 
 			var solicitudEmpleo = await _context.SolicitudEmpleos.FirstOrDefaultAsync(se => se.GuId == usuarioActual.Id);
 
-			solicitudEmpleo.FileName = solicitudEmpleo.FileName.Split('_')[1];
+            if (solicitudEmpleo  == null)
+            {
+                return RedirectToAction("SolicitudEmpleo", "Home");
+            }
 
-			if (solicitudEmpleo  == null)
-			{
-				return RedirectToAction("SolicitudEmpleo", "Home");
-			}
+            solicitudEmpleo.FileName = solicitudEmpleo.FileName.Split('_')[1];
+
+
 			return View("EditarSolicitudEmpleo", solicitudEmpleo);
 		}
 
