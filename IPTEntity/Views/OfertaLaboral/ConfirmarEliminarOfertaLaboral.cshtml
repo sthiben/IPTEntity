@@ -1,0 +1,13 @@
+﻿@{
+	ViewData["Title"] = "Eliminar oferta de empleo";
+}
+
+<div class="align-content-center">
+	<h1>¿Está seguro que desea eliminar su oferta laboral?</h1>
+	<h3>Esta acción es definitiva.</h3>
+
+	<form method="post" asp-controller="OfertaLaboral" asp-action="EliminarOfertaLaboral">
+		<input type="submit" value="Eliminar" class="btn btn-danger" />
+		<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+	</form>
+</div>

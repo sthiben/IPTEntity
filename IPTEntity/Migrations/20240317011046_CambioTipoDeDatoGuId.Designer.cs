@@ -12,70 +12,42 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPTEntity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231105154804_ArchivosAdjuntos")]
-    partial class ArchivosAdjuntos
+    [Migration("20240317011046_CambioTipoDeDatoGuId")]
+    partial class CambioTipoDeDatoGuId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.12")
+                .HasAnnotation("ProductVersion", "7.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("IPTEntity.Entidades.ArchivoAdjunto", b =>
+            modelBuilder.Entity("IPTEntity.Entidades.OfertaLaboral", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SolicitudEmpleoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Titulo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("orden")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SolicitudEmpleoId");
-
-                    b.ToTable("ArchivoAdjunto");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.Organizacion", b =>
-                {
-                    b.Property<int>("OrganizacionID")
+                    b.Property<int>("OfertaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrganizacionID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfertaId"));
 
-                    b.Property<string>("Direccion")
+                    b.Property<string>("DescripcionOferta")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("PaginaWeb")
+                    b.Property<string>("NombreEmpresa")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OrganizacionID");
+                    b.Property<string>("Profesion")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Organizaciones");
+                    b.Property<string>("TituloOferta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OfertaId");
+
+                    b.ToTable("OfertaLaboral");
                 });
 
             modelBuilder.Entity("IPTEntity.Entidades.SolicitudEmpleo", b =>
@@ -86,64 +58,43 @@ namespace IPTEntity.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Estado")
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EstadoEmpleado")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaSolicitud")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NombreP")
+                    b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Orden")
+                    b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UsuarioCreacionId")
+                    b.Property<string>("GuId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VacanteId")
-                        .HasMaxLength(250)
-                        .HasColumnType("int");
+                    b.Property<string>("Nombres")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("VacanteId1")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ResumenCV")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoDiscapacidad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VacanteId1");
-
                     b.ToTable("SolicitudEmpleos");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.Vacante", b =>
-                {
-                    b.Property<Guid>("VacanteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Cargo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Estado")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FechaPublicacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrganizacionID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Salario")
-                        .HasColumnType("int");
-
-                    b.HasKey("VacanteId");
-
-                    b.HasIndex("OrganizacionID");
-
-                    b.ToTable("Vacantes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -344,37 +295,6 @@ namespace IPTEntity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("IPTEntity.Entidades.ArchivoAdjunto", b =>
-                {
-                    b.HasOne("IPTEntity.Entidades.SolicitudEmpleo", "SolicitudEmpleo")
-                        .WithMany("ArchivoAdjuntos")
-                        .HasForeignKey("SolicitudEmpleoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SolicitudEmpleo");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.SolicitudEmpleo", b =>
-                {
-                    b.HasOne("IPTEntity.Entidades.Vacante", "Vacante")
-                        .WithMany("SolicitudEmpleos")
-                        .HasForeignKey("VacanteId1");
-
-                    b.Navigation("Vacante");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.Vacante", b =>
-                {
-                    b.HasOne("IPTEntity.Entidades.Organizacion", "Organizacion")
-                        .WithMany("Vacantes")
-                        .HasForeignKey("OrganizacionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organizacion");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -424,21 +344,6 @@ namespace IPTEntity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.Organizacion", b =>
-                {
-                    b.Navigation("Vacantes");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.SolicitudEmpleo", b =>
-                {
-                    b.Navigation("ArchivoAdjuntos");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.Vacante", b =>
-                {
-                    b.Navigation("SolicitudEmpleos");
                 });
 #pragma warning restore 612, 618
         }

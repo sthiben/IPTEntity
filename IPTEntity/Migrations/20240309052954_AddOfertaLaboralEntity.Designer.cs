@@ -4,6 +4,7 @@ using IPTEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPTEntity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240309052954_AddOfertaLaboralEntity")]
+    partial class AddOfertaLaboralEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,35 +24,6 @@ namespace IPTEntity.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("IPTEntity.Entidades.Empresas", b =>
-                {
-                    b.Property<string>("EmpresaId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CorreoElectronico")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EstaRegistrada")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NombreEmpresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SitioWeb")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmpresaId");
-
-                    b.ToTable("Empresas");
-                });
 
             modelBuilder.Entity("IPTEntity.Entidades.OfertaLaboral", b =>
                 {
@@ -62,7 +36,7 @@ namespace IPTEntity.Migrations
                     b.Property<string>("DescripcionOferta")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmpresaId")
+                    b.Property<string>("NombreEmpresa")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Profesion")
@@ -101,14 +75,8 @@ namespace IPTEntity.Migrations
                     b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GuId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Profesion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResumenCV")

@@ -4,21 +4,15 @@
 @using Microsoft.EntityFrameworkCore;
 @inject UserManager<IdentityUser> UserManager
 @inject ApplicationDbContext _context
-@model IPTEntity.Models.UsuariosListadoViewModel
+@model IPTEntity.Models.OfertasLaboralesListViewModel
 @{
-	ViewData["Title"] = "Listado de usuarios";
+	ViewData["Title"] = "Listado de ofertas de empleo";
 	Layout = "../shared/_layout";
 }
-<h1>Listado de usuarios</h1>
+<h1>Listado de ofertas de empleo</h1>
 
-@if (Model.Mensaje is not null)
-{
-	<div class=" alert alertalert-success" role="alert">
-		@Model.Mensaje
-	</div>
-}
 
-<form asp-controller="Usuarios" asp-action="FiltrarPorProfesion" method="post">
+<form asp-controller="OfertaLaboral" asp-action="FiltrarPorProfesion" method="post">
 	<input type="hidden" name="ProfesionSeleccionada" id="ProfesionSeleccionada" />
 	<div class="d-inline-flex justify-content-end align-items center w-100">
 		<div class="d-flex mx-2 mt-1 align-items-center">
@@ -36,71 +30,40 @@
 </form>
 
 <br />
-@if (Model.Usuarios != null)
-{
-	<form method="post">
-		<table class="table table-hover">
-			<thead>
+
+<form method="post" asp-controller="OfertaLaboral" asp-action="VerInformacionEmpresa">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<td class="fw-bold">Nombre empresa</td>
+				<td class="fw-bold">Título de la oferta</td>
+				<td class="fw-bold">Profesión</td>
+				<td class="fw-bold"></td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var ofertaEmpleo in Model.OfertasLaborales)
+			{
 				<tr>
-					<td class="fw-bold">Nombres</td>
-					<td class="fw-bold">Apellidos</td>
-					<td class="fw-bold">Usuario</td>
-					<td class="fw-bold">Correo</td>
-					<td class="fw-bold">Profesión</td>
-					<td class="fw-bold">Tipo discapacidad</td>
-					<td class="fw-bold">Hoja de vida</td>
+					<td>
+						@ofertaEmpleo.NombreEmpresa
+					</td>
+					<td>
+						@ofertaEmpleo.TituloOferta
+					</td>
+					<td>
+						@ofertaEmpleo.Profesion
+					</td>
+					<td>
+						<button type="submit" class=" btn btn-primary me-2" name="empresaId" value="@ofertaEmpleo.EmpresaId">
+							Ver información
+						</button>
+					</td>
 				</tr>
-			</thead>
-			<tbody>
-				@foreach (var usuario in Model.Usuarios)
-				{
-					var user = await UserManager.FindByEmailAsync(usuario.Email);
-					var rolesUsuario = await UserManager.GetRolesAsync(user);
-
-					@if (rolesUsuario.Contains(Constantes.RolUsuario))
-					{
-						var userSolEmpl = await _context.SolicitudEmpleos.FirstOrDefaultAsync(se => se.GuId == user.Id);
-						@if( userSolEmpl == null)
-						{
-							continue;
-						}
-						var GuId = user.Id;
-						<tr>
-							<td>
-								@userSolEmpl.Nombres
-							</td>
-							<td>
-								@userSolEmpl.Apellidos
-							</td>
-							<td>
-								@usuario.Username
-							</td>
-							<td>
-								@usuario.Email
-							</td>
-							<td>
-								@userSolEmpl.Profesion
-							</td>
-							<td>
-								@userSolEmpl.TipoDiscapacidad
-							</td>
-							<td>
-								<button class=" btn btn-primary me-2"
-										asp-controller="DescargarArchivo"
-										asp-action="DescargarArchivo"
-										asp-route-GuId=@GuId>
-									Descarga CV
-								</button>
-
-							</td>
-						</tr>
-					}
-				}
-			</tbody>
-		</table>
-	</form>
-
-}
+			}
+		</tbody>
+	</table>
+</form>
 
 
 <script>
@@ -168,3 +131,4 @@
 		hiddenField.value = select.value;
 	});
 </script>
+

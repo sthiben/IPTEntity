@@ -5,11 +5,12 @@ namespace IPTEntity.Models
     public class RegistroViewModel
     {
         [Required(ErrorMessage = "El campo {0} es Requerido")]
-        [EmailAddress(ErrorMessage = "El campo debe ser un correo electronico valido")]
+        [EmailAddress(ErrorMessage = "Ingrese un correo electrónico válido.")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "El campo {0} es Requerido")]
+        [Required(ErrorMessage = "Ingrese un nombre de usuario.")]
+        public string Username { get; set; }
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
         [DataType(DataType.Password)]
-        
         public string  Password {get; set; }
     }
 }

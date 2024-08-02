@@ -1,0 +1,16 @@
+﻿@model IPTEntity.Entidades.SolicitudEmpleo
+@{
+	ViewData["Title"] = "Confirmar Eliminación Solicitud de Empleo";
+}
+
+<div class="align-content-center">
+	<h1>¿Está seguro que desea eliminar su solicitud de empleo?</h1>
+	<h3>Esta acción es definitiva.</h3>
+
+	<form method="post" asp-action="EliminarSolicitudEmpleo">
+		<input type="submit" value="Eliminar" class="btn btn-danger" />
+		<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+	</form>
+</div>
+
+

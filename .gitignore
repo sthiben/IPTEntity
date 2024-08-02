@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/IPTEntity/appsettings.Development.json
+/IPTEntity/wwwroot/uploads
+/IPTEntity/appsettings.json

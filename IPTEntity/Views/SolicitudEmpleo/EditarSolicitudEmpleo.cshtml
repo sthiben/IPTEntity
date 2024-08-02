@@ -1,24 +1,24 @@
 ﻿@using IPTEntity.Entidades
 @model SolicitudEmpleo
 @{
-	ViewData["Title"] = "Solicitud Empleo";
+	ViewData["Title"] = "Editar Solicitud Empleo";
 }
-<h2><strong>Llena los campos: </strong></h2>
+<h2><strong>Edita los campos: </strong></h2>
 <div>
 	<br />
 </div>
-<form method="post" asp-controller="SolicitudEmpleo" asp-action="Crear" enctype="multipart/form-data">
+<form method="post" asp-controller="SolicitudEmpleo" asp-action="ActualizarSolicitudEmpleo" enctype="multipart/form-data">
 	<div class="row">
 		<div class="col">
-			<input type="text" class="form-control" placeholder="Número de cédula: " name="UsuarioId" required />
+			<input type="text" class="form-control" placeholder="Número de cédula: " name="UsuarioId" required value="@Model.UsuarioId"/>
 			<span asp-validation-for="UsuarioId" class="text-danger"></span>
 		</div>
 		<div class="col">
-			<input type="text" class="form-control" placeholder="Nombres: " name="Nombres" required />
+			<input type="text" class="form-control" placeholder="Nombres: " name="Nombres" required value="@Model.Nombres"/>
 			<span asp-validation-for="Nombres" class="text-danger"></span>
 		</div>
 		<div class="col">
-			<input type="text" class="form-control" placeholder="Apellidos: " name="Apellidos" required />
+			<input type="text" class="form-control" placeholder="Apellidos: " name="Apellidos" required value="@Model.Apellidos"/>
 			<span asp-validation-for="Apellidos" class="text-danger"></span>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 
 	<div class="mb-3">
 		<label class="form-label"><h3>Resumen de tu experiencia laboral: </h3></label>
-		<textarea type="text" class="form-control" rows="3" name="ResumenCV" placeholder="Ingresa tu experiencia laboral"></textarea>
+		<textarea type="text" class="form-control" rows="3" name="ResumenCV" placeholder="@Model.ResumenCV" ></textarea>
 	</div>
 
 	<div class="mb-4"><h3>Seleccione su profesión: </h3></div>
@@ -77,14 +77,12 @@
 	<div class="d-flex justify-content-between align-items-center">
 		<div>
 			<button type="submit" class="btn btn-primary d-inline-flex mr-2">Enviar</button>
-			<button type="button" class="btn btn-secondary d-inline-flex mr-2" onclick="window.location.href='@Url.Action("Index", "Home")'">Cancelar</button>
-		</div>
-
-		<div>
-			<button type="button" class="btn btn-info d-inline-flex" onclick="window.location.href='@Url.Action("EditarSolicitudEmpleo", "SolicitudEmpleo")'">Editar</button>
-			<button type="button" class="btn btn-danger d-inline-flex" onclick="window.location.href='@Url.Action("ConfirmarEliminarSolicitudEmpleo", "SolicitudEmpleo")'">Eliminar</button>
+			<button type="reset" class="btn btn-secondary d-inline-flex mr-2" onclick="window.location.href='@Url.Action("Index", "Home")'">Cancelar</button>
 		</div>
 	</div>
+
+
+
 </form>
 
 <script>
@@ -113,32 +111,7 @@
 		"Bachiller",
 		"Técnico en programación de software",
 		"Técnico en mantenimiento industrial",
-		"Enfermería",
-		"Servicios generales",
-		"Guarda de seguridad",
-		"Asistente administrativo virtual",
-		"Servicio al cliente en línea",
-		"Traductor o intérprete",
-		"Trabajo de investigación en línea",
-		"Redacción de contenido",
-		"Programador web",
-		"Edición de video o audio",
-		"Tutor en línea",
-		"Trabajo de diseño gráfico",
-		"Consultoría en accesibilidad",
-		"Empleado de tienda en línea",
-		"Asistente de biblioteca",
-		"Auxiliar de almacén",
-		"Operador de servicio al cliente",
-		"Empacador en línea de productos",
-		"Asistente de limpieza en empresas",
-		"Recepcionista",
-		"Auxiliar de cafetería",
-		"Ayudante de cocina",
-		"Empleado de tienda minorista",
-		"Recepcionista en empresas o instituciones",
-		"Trabajador de ensamblaje en fábricas",
-		"Auxiliar de lavandería"
+
 	];
 
 	opciones.forEach(function (opcion) {
@@ -151,4 +124,3 @@
 		var selectedValue = select.value;
 	});
 </script>
-

@@ -1,4 +1,5 @@
 using IPTEntity;
+using IPTEntity.Servicios;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +20,7 @@ builder.Services.AddControllersWithViews(opciones =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(opciones => opciones.UseSqlServer("name=DefaultConnection"));
 builder.Services.AddAuthentication();
+builder.Services.AddScoped<IUserGetId, UserGetId>();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(opciones =>
 {
     opciones.SignIn.RequireConfirmedAccount = false;
@@ -30,6 +32,7 @@ builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.Ap
         opciones.AccessDeniedPath = "/usuarios/login";
     });
 
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,6 +49,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

@@ -4,6 +4,7 @@ using IPTEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,70 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPTEntity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240306042354_DiegoMigration2")]
+    partial class DiegoMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.16")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("IPTEntity.Entidades.Empresas", b =>
-                {
-                    b.Property<string>("EmpresaId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CorreoElectronico")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EstaRegistrada")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NombreEmpresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SitioWeb")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmpresaId");
-
-                    b.ToTable("Empresas");
-                });
-
-            modelBuilder.Entity("IPTEntity.Entidades.OfertaLaboral", b =>
-                {
-                    b.Property<int>("OfertaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfertaId"));
-
-                    b.Property<string>("DescripcionOferta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmpresaId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Profesion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TituloOferta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OfertaId");
-
-                    b.ToTable("OfertaLaboral");
-                });
 
             modelBuilder.Entity("IPTEntity.Entidades.SolicitudEmpleo", b =>
                 {
@@ -89,7 +38,6 @@ namespace IPTEntity.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EstadoEmpleado")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaSolicitud")
@@ -101,14 +49,8 @@ namespace IPTEntity.Migrations
                     b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GuId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Profesion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResumenCV")
